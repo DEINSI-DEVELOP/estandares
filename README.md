@@ -43,3 +43,34 @@ Laravel utiliza PHPDoc para documentar el código. PHPDoc es un formato de comen
 | Config | kebab-case | google-calendar.php |
 | Contract (interface) | adjective or noun | Authenticatable |
 | Trait | adjective | Notifiable |
+
+# Siempre que sea posible, utilice una sintaxis más corta y legible.
+
+| Sintáxis Común | Sintaxis más corta y legible |
+| --- | --- |
+| Session::get('cart') | session('cart') |
+| $request->session()->get('cart') | session('cart') |
+| Session::put('cart', $data) | session(['cart' => $data]) |
+| $request->input('name'), Request::get('name') | $request->name, request('name') |
+| return Redirect::back() | return back() |
+| is_null($object->relation) ? $object->relation->id :                             null                             } | optional($object->relation)->id |
+| return view('index')->with('title', $title)->with('client',                             $client) | return view('index', compact('title', 'client')) |
+| $request->has('value') ? $request->value :                             'default'; | $request->get('value', 'default') |
+| Carbon::now(), Carbon::today() | now(), today() |
+| App::make('Class') | app('Class') |
+| ->where('column', '=', 1) | ->where('column', 1) |
+| ->orderBy('created_at', 'desc') | ->latest() |
+| ->orderBy('age', 'desc') | ->latest('age') |
+| ->orderBy('created_at', 'asc') | ->oldest() |
+| ->select('id', 'name')->get() | ->get(['id', 'name']) |
+| ->first()->name | ->value('name') |
+
+# Principio de responsabilidad única
+
+Principio de responsabilidad única es un principio de programación que indica que una clase y un método deben tener una sola responsabilidad. Esto significa que cada clase y método debe tener una única tarea o responsabilidad y no debe tener más de una razón para cambiar.
+
+Este principio se aplica en Laravel a través de la separación de responsabilidades en las diferentes capas de la arquitectura del framework. Por ejemplo, los modelos son responsables de interactuar con la base de datos, los controladores son responsables de manejar las solicitudes HTTP y las vistas son responsables de mostrar la información al usuario final.
+
+Siguiendo el principio de responsabilidad única, es más fácil mantener y escalar una aplicación ya que cada componente es responsable de una única tarea y no tiene dependencias innecesarias. Esto también facilita la reutilización del código ya que las clases y métodos se pueden utilizar en diferentes partes de la aplicación sin tener que modificarlos.
+
+## Una clase y un método deben tener una sola responsabilidad.
