@@ -75,7 +75,7 @@ Siguiendo el principio de responsabilidad única, es más fácil mantener y esca
 
 ## Una clase y un método deben tener una sola responsabilidad.
 
-### Ejemplo de lo que `NO DEBES HACER`
+### Ejemplo `INCORRECTO`
 
 ```php
 public function getFullNameAttribute()
@@ -88,7 +88,7 @@ public function getFullNameAttribute()
     }
 ```
 
-### Ejemplo de lo que `SI DEBES HACER`
+### Ejemplo `CORRECTO`
 
 ```php
 public function getFullNameAttribute()
@@ -114,9 +114,29 @@ public function getFullNameAttribute()
 
 # Modelos robustos, controladores débiles
 
+public function store(Request $request)
+{
+$this->articleService->handleUploadedImage($request->file('image'));
+
+```
+    ....
+}
+
+class ArticleService
+{
+    public function handleUploadedImage($image)
+    {
+        if (!is_null($image)) {
+            $image->move(public_path('images') . 'temp');
+        }
+    }
+}
+
+```
+
 Pon toda la lógica relacionada con la BD en modelos Eloquent o en clases Repositorio si estás usando Query Builder o consultas SQL sin procesar.
 
-### Ejemplo de lo que `NO DEBES HACER`
+### Ejemplo `INCORRECTO`
 
 ```php
 public function index()
@@ -131,7 +151,7 @@ public function index()
     }
 ```
 
-### Ejemplo de lo que `SI DEBES HACER`
+### Ejemplo `CORRECTO`
 
 ```php
 public function index()
@@ -156,7 +176,7 @@ public function index()
 
 Trasladar la validación de los controladores a las clases Request.
 
-### Ejemplo de lo que `NO DEBES HACER`
+### Ejemplo `INCORRECTO`
 
 ```php
 public function store(Request $request)
@@ -171,7 +191,7 @@ public function store(Request $request)
     }
 ```
 
-### Ejemplo de lo que `SI DEBES HACER`
+### Ejemplo `CORRECTO`
 
 ```php
 public function store(PostRequest $request)
@@ -196,7 +216,7 @@ public function store(PostRequest $request)
 
 Un controlador debe tener una sola responsabilidad, así que mueve la lógica de negocio de los controladores a las clases de servicio.
 
-### Ejemplo de lo que `NO DEBES HACER`
+### Ejemplo `INCORRECTO`
 
 ```php
 public function store(Request $request)
@@ -209,7 +229,7 @@ public function store(Request $request)
     }
 ```
 
-### Ejemplo de lo que `SI DEBES HACER`
+### Ejemplo `CORRECTO`
 
 ```php
 public function store(Request $request)
@@ -228,4 +248,253 @@ public function store(Request $request)
             }
         }
     }
+```
+
+# No repetir código
+
+Reutiliza el código siempre que puedas. SRP te ayuda a evitar la duplicación. Además, reutiliza las plantillas de Blade, usa los ámbitos de Eloquent, etc.
+
+### Ejemplo `INCORRECTO`
+
+```php
+public function getActive()
+    {
+        return $this->where('verified', 1)->whereNotNull('deleted_at')->get();
+    }
+
+    public function getArticles()
+    {
+        return $this->whereHas('user', function ($q) {
+                $q->where('verified', 1)->whereNotNull('deleted_at');
+            })->get();
+    }
+```
+
+### Ejemplo `CORRECTO`
+
+```php
+public function scopeActive($q)
+    {
+        return $q->where('verified', 1)->whereNotNull('deleted_at');
+    }
+
+    public function getActive()
+    {
+        return $this->active()->get();
+    }
+
+    public function getArticles()
+    {
+        return $this->whereHas('user', function ($q) {
+                $q->active();
+            })->get();
+    }
+```
+
+# Utilizar Eloquent en lugar de Query Builder y consultas SQL sin procesar. Usar primero las colecciones a las matrices
+
+Eloquent permite escribir código legible y fácil de mantener. Además, Eloquent tiene grandes herramientas integradas como soft deletes, events, scopes etc.
+
+### Ejemplo `INCORRECTO`
+
+```sql
+SELECT *
+    FROM `articles`
+    WHERE EXISTS (SELECT *
+                  FROM `users`
+                  WHERE `articles`.`user_id` = `users`.`id`
+                  AND EXISTS (SELECT *
+                              FROM `profiles`
+                              WHERE `profiles`.`user_id` = `users`.`id`)
+                  AND `users`.`deleted_at` IS NULL)
+    AND `verified` = '1'
+    AND `active` = '1'
+    ORDER BY `created_at` DESC
+```
+
+### Ejemplo `CORRECTO`
+
+```php
+Article::has('user.profile')->verified()->latest()->get();
+```
+
+# Asignación masiva
+
+### Ejemplo `INCORRECTO`
+
+```php
+$article = new Article;
+    $article->title = $request->title;
+    $article->content = $request->content;
+    $article->verified = $request->verified;
+    // Add category to article
+    $article->category_id = $category->id;
+    $article->save();
+```
+
+### Ejemplo `CORRECTO`
+
+```php
+$category->article()->create($request->all());
+```
+
+# No ejecutar consultas en plantillas Blade y utilizar eager loading (problema N + 1)
+
+### `INCORRECTO`(para 100 usuarios, se ejecutarán 101 consultas a la base de datos):
+
+```php
+@foreach (User::all() as $user)
+
+    @endforeach
+```
+
+### `CORRECTO` (para 100 usuarios, se ejecutarán 2 consultas a la base de datos):
+
+```php
+$users = User::with('profile')->get();
+
+    ...
+
+    @foreach ($users as $user)
+
+    @endforeach
+```
+
+# El código se comenta usando nombres descriptivos de métodos y variables a los comentarios.
+
+### `INCORRECTO`
+
+```php
+if (count((array) $builder->getQuery()->joins) > 0)
+```
+
+### `ACEPTABLE`
+
+```php
+// Determine if there are any joins.
+    if (count((array) $builder->getQuery()->joins) > 0)
+```
+
+### `CORRECTO`
+
+```php
+if ($this->hasJoins())
+```
+
+# No poner código JS y CSS en las plantillas Blade y no ponga HTML en las clases PHP.
+
+### `INCORRECTO`
+
+```jsx
+let article = ``;
+```
+
+### `ACEPTABLE`
+
+```html
+<input id="article" type="hidden" value="">
+
+    Or
+
+    <button class="js-fav-article" data-article=""><button>
+```
+
+### `CORRECTO`
+
+```jsx
+let article = $('#article').val();
+```
+
+La mejor manera es utilizar el paquete especializado PHP a JS para transferir los datos.
+
+# Utilizar archivos de configuración y de idioma, constantes en lugar de texto en el código.
+
+### `INCORRECTO`
+
+```php
+public function isNormal()
+    {
+        return $article->type === 'normal';
+    }
+
+    return back()->with('message', 'Your article has been added!');
+```
+
+### `CORRECTO`
+
+```php
+public function isNormal()
+    {
+        return $article->type === Article::TYPE_NORMAL;
+    }
+
+    return back()->with('message', __('app.article_added'));
+```
+
+# Utilizar herramientas Laravel estándar aceptadas por la comunidad
+
+| Tarea | Herramientas estandar | Herramientas de terceros |
+| --- | --- | --- |
+| Authorization | Policies | Entrust, Sentinel and other packages |
+| Compiling assets | Laravel Mix | Grunt, Gulp, 3rd party packages |
+| Development Environment | Homestead | Docker |
+| Deployment | Laravel Forge | Deployer and other solutions |
+| Unit testing | PHPUnit, Mockery | Phpspec |
+| Browser testing | Laravel Dusk | Codeception |
+| DB | Eloquent | SQL, Doctrine |
+| Templates | Blade | Twig |
+| Working with data | Laravel collections | Arrays |
+| Form validation | Request classes | 3rd party packages, validation in controller |
+| Authentication | Built-in | 3rd party packages, your own solution |
+| API authentication | Laravel Passport | 3rd party JWT and OAuth packages |
+| Creating API | Built-in | Dingo API and similar packages |
+| Working with DB structure | Migrations | Working with DB structure directly |
+| Localization | Built-in | 3rd party packages |
+| Realtime user interfaces | Laravel Echo, Pusher | 3rd party packages and working with WebSockets directly |
+| Generating testing data | Seeder classes, Model Factories, Faker | Creating testing data manually |
+| Task scheduling | Laravel Task Scheduler | Scripts and 3rd party packages |
+| DB | MySQL, PostgreSQL, SQLite, SQL Server | MongoDB |
+
+# Utilizar contenedor IoC o fachadas en lugar de nueva clase
+
+La nueva sintaxis Class crea un acoplamiento estrecho entre las clases y complica las pruebas. Utiliza contenedores IoC o fachadas en su lugar.
+
+### `INCORRECTO`
+
+```php
+$user = new User;
+    $user->create($request->all());
+```
+
+### `CORRECTO`
+
+```php
+public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
+
+    ....
+
+    $this->user->create($request->all());
+```
+
+# No obtener directamente los datos del archivo ".env
+
+Pasar los datos a los archivos de configuración en su lugar y luego utilizar la función de ayuda config() para utilizar los datos en una aplicación.
+
+### `INCORRECTO`
+
+```php
+$apiKey = env('API_KEY');
+```
+
+### `CORRECTO`
+
+```php
+// config/api.php
+    'key' => env('API_KEY'),
+
+    // Use the data
+    $apiKey = config('api.key');
 ```
