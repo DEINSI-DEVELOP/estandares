@@ -111,3 +111,121 @@ public function getFullNameAttribute()
         return $this->first_name[0] . '. ' . $this->last_name;
     }
 ```
+
+# Modelos robustos, controladores débiles
+
+Pon toda la lógica relacionada con la BD en modelos Eloquent o en clases Repositorio si estás usando Query Builder o consultas SQL sin procesar.
+
+### Ejemplo de lo que `NO DEBES HACER`
+
+```php
+public function index()
+    {
+        $clients = Client::verified()
+            ->with(['orders' => function ($q) {
+                $q->where('created_at', '>', Carbon::today()->subWeek());
+            }])
+            ->get();
+
+        return view('index', ['clients' => $clients]);
+    }
+```
+
+### Ejemplo de lo que `SI DEBES HACER`
+
+```php
+public function index()
+    {
+        return view('index', ['clients' => $this->client->getWithNewOrders()]);
+    }
+
+    class Client extends Model
+    {
+        public function getWithNewOrders()
+        {
+            return $this->verified()
+                ->with(['orders' => function ($q) {
+                    $q->where('created_at', '>', Carbon::today()->subWeek());
+                }])
+                ->get();
+        }
+    }
+```
+
+# Validación
+
+Trasladar la validación de los controladores a las clases Request.
+
+### Ejemplo de lo que `NO DEBES HACER`
+
+```php
+public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|unique:posts|max:255',
+            'body' => 'required',
+            'publish_at' => 'nullable|date',
+        ]);
+
+        ....
+    }
+```
+
+### Ejemplo de lo que `SI DEBES HACER`
+
+```php
+public function store(PostRequest $request)
+    {
+        ....
+    }
+
+    class PostRequest extends Request
+    {
+        public function rules()
+        {
+            return [
+                'title' => 'required|unique:posts|max:255',
+                'body' => 'required',
+                'publish_at' => 'nullable|date',
+            ];
+        }
+    }
+```
+
+# La lógica empresarial debe estar en la clase de servicio
+
+Un controlador debe tener una sola responsabilidad, así que mueve la lógica de negocio de los controladores a las clases de servicio.
+
+### Ejemplo de lo que `NO DEBES HACER`
+
+```php
+public function store(Request $request)
+    {
+        if ($request->hasFile('image')) {
+            $request->file('image')->move(public_path('images') . 'temp');
+        }
+
+        ....
+    }
+```
+
+### Ejemplo de lo que `SI DEBES HACER`
+
+```php
+public function store(Request $request)
+    {
+        $this->articleService->handleUploadedImage($request->file('image'));
+
+        ....
+    }
+
+    class ArticleService
+    {
+        public function handleUploadedImage($image)
+        {
+            if (!is_null($image)) {
+                $image->move(public_path('images') . 'temp');
+            }
+        }
+    }
+```
