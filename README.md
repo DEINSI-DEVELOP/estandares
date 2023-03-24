@@ -74,3 +74,40 @@ Este principio se aplica en Laravel a través de la separación de responsabilid
 Siguiendo el principio de responsabilidad única, es más fácil mantener y escalar una aplicación ya que cada componente es responsable de una única tarea y no tiene dependencias innecesarias. Esto también facilita la reutilización del código ya que las clases y métodos se pueden utilizar en diferentes partes de la aplicación sin tener que modificarlos.
 
 ## Una clase y un método deben tener una sola responsabilidad.
+
+### Ejemplo de lo que `NO DEBES HACER`
+
+```php
+public function getFullNameAttribute()
+    {
+        if (auth()->user() && auth()->user()->hasRole('client') && auth()->user()->isVerified()) {
+            return 'Mr. ' . $this->first_name . ' ' . $this->middle_name . ' ' . $this->last_name;
+        } else {
+            return $this->first_name[0] . '. ' . $this->last_name;
+        }
+    }
+```
+
+### Ejemplo de lo que `SI DEBES HACER`
+
+```php
+public function getFullNameAttribute()
+    {
+        return $this->isVerifiedClient() ? $this->getFullNameLong() : $this->getFullNameShort();
+    }
+
+    public function isVerifiedClient()
+    {
+        return auth()->user() && auth()->user()->hasRole('client') && auth()->user()->isVerified();
+    }
+
+    public function getFullNameLong()
+    {
+        return 'Mr. ' . $this->first_name . ' ' . $this->middle_name . ' ' . $this->last_name;
+    }
+
+    public function getFullNameShort()
+    {
+        return $this->first_name[0] . '. ' . $this->last_name;
+    }
+```
