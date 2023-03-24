@@ -435,30 +435,6 @@ public function isNormal()
 | Task scheduling | Laravel Task Scheduler | Scripts and 3rd party packages |
 | DB | MySQL, PostgreSQL, SQLite, SQL Server | MongoDB |
 
-# Utilizar contenedor IoC o fachadas en lugar de nueva clase
-
-La nueva sintaxis Class crea un acoplamiento estrecho entre las clases y complica las pruebas. Utiliza contenedores IoC o fachadas en su lugar.
-
-### `INCORRECTO`
-
-```php
-$user = new User;
-    $user->create($request->all());
-```
-
-### `CORRECTO`
-
-```php
-public function __construct(User $user)
-    {
-        $this->user = $user;
-    }
-
-    ....
-
-    $this->user->create($request->all());
-```
-
 # No obtener directamente los datos del archivo ".env
 
 Pasar los datos a los archivos de configuración en su lugar y luego utilizar la función de ayuda config() para utilizar los datos en una aplicación.
