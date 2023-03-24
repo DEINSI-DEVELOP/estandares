@@ -114,26 +114,6 @@ public function getFullNameAttribute()
 
 # Modelos robustos, controladores débiles
 
-public function store(Request $request)
-{
-$this->articleService->handleUploadedImage($request->file('image'));
-
-```
-    ....
-}
-
-class ArticleService
-{
-    public function handleUploadedImage($image)
-    {
-        if (!is_null($image)) {
-            $image->move(public_path('images') . 'temp');
-        }
-    }
-}
-
-```
-
 Pon toda la lógica relacionada con la BD en modelos Eloquent o en clases Repositorio si estás usando Query Builder o consultas SQL sin procesar.
 
 ### Ejemplo `INCORRECTO`
@@ -324,12 +304,12 @@ Article::has('user.profile')->verified()->latest()->get();
 
 ```php
 $article = new Article;
-    $article->title = $request->title;
-    $article->content = $request->content;
-    $article->verified = $request->verified;
-    // Add category to article
-    $article->category_id = $category->id;
-    $article->save();
+$article->title = $request->title;
+$article->content = $request->content;
+$article->verified = $request->verified;
+// Add category to article
+$article->category_id = $category->id;
+$article->save();
 ```
 
 ### Ejemplo `CORRECTO`
