@@ -31,3 +31,7 @@ Una vez que el código ha pasado satisfactoriamente las pruebas de QA, se envía
 ## Servidor de despliegue:
 
 Finalmente, el código es desplegado en el servidor de producción. En este paso, el código ya ha sido revisado por el code reviewer, probado por el equipo de QA y evaluado en el servidor de escenario, por lo que se espera que el despliegue se realice sin problemas. Una vez que el código ha sido desplegado en producción, el desarrollador responsable puede cerrar el pull request.
+
+## Diagrama de proceso
+
+![img](process-diagram.svg)

@@ -1,3 +1,5 @@
+# Estándares
+
 # [Commits Convencionales](https://www.conventionalcommits.org/es/v1.0.0/)
 
 La especificación de Commits Convencionales es una convención ligera sobre los mensajes de commits. Proporciona un conjunto sencillo de reglas para crear un historial de commits explícito; lo que hace más fácil escribir herramientas automatizadas encima del historial. Esta convención encaja con **[SemVer](http://semver.org/lang/es/)**, al describir en los mensajes de los commits las funcionalidades, arreglos, y cambios de ruptura hechos.
@@ -90,7 +92,7 @@ Tipos adicionales no son obligatorios en la especificación de Commits Convencio
 ## Ejemplos:
 
 <aside>
-<img src="/icons/command-line_blue.svg" alt="/icons/command-line_blue.svg" width="40px" /> ****Mensaje de commit con descripción y cambio de ruptura en la nota al pie****
+<img src="https://www.notion.so/icons/command-line_blue.svg" alt="https://www.notion.so/icons/command-line_blue.svg" width="40px" /> ****Mensaje de commit con descripción y cambio de ruptura en la nota al pie****
 
 </aside>
 
@@ -101,7 +103,7 @@ BREAKING CHANGE: `extends` key in config file is now used for extending other co
 ```
 
 <aside>
-<img src="/icons/command-line_blue.svg" alt="/icons/command-line_blue.svg" width="40px" /> ****Mensaje de commit con `!` para llamar la atención al cambio de ruptura**
+<img src="https://www.notion.so/icons/command-line_blue.svg" alt="https://www.notion.so/icons/command-line_blue.svg" width="40px" /> ****Mensaje de commit con `!` para llamar la atención al cambio de ruptura**
 
 </aside>
 
@@ -110,7 +112,7 @@ refactor!: drop support for Node 6
 ```
 
 <aside>
-<img src="/icons/command-line_blue.svg" alt="/icons/command-line_blue.svg" width="40px" /> ****Mensaje de commit con ambos `!` y BREAKING CHANGE en la nota al pie**
+<img src="https://www.notion.so/icons/command-line_blue.svg" alt="https://www.notion.so/icons/command-line_blue.svg" width="40px" /> ****Mensaje de commit con ambos `!` y BREAKING CHANGE en la nota al pie**
 
 </aside>
 
@@ -121,7 +123,7 @@ BREAKING CHANGE: refactor to use JavaScript features not available in Node 6.
 ```
 
 <aside>
-<img src="/icons/command-line_blue.svg" alt="/icons/command-line_blue.svg" width="40px" /> ****Mensaje de commit sin cuerpo****
+<img src="https://www.notion.so/icons/command-line_blue.svg" alt="https://www.notion.so/icons/command-line_blue.svg" width="40px" /> ****Mensaje de commit sin cuerpo****
 
 </aside>
 
@@ -130,7 +132,7 @@ docs: correct spelling of CHANGELOG
 ```
 
 <aside>
-<img src="/icons/command-line_blue.svg" alt="/icons/command-line_blue.svg" width="40px" /> ****Mensaje de commit con ámbito****
+<img src="https://www.notion.so/icons/command-line_blue.svg" alt="https://www.notion.so/icons/command-line_blue.svg" width="40px" /> ****Mensaje de commit con ámbito****
 
 </aside>
 
@@ -139,7 +141,7 @@ feat(lang): added polish language
 ```
 
 <aside>
-<img src="/icons/command-line_blue.svg" alt="/icons/command-line_blue.svg" width="40px" /> ****Mensaje de commit con cuerpo multi-párrafo y múltiples notas al pie****
+<img src="https://www.notion.so/icons/command-line_blue.svg" alt="https://www.notion.so/icons/command-line_blue.svg" width="40px" /> ****Mensaje de commit con cuerpo multi-párrafo y múltiples notas al pie****
 
 </aside>
 
