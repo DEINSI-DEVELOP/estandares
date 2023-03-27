@@ -4,6 +4,71 @@
 
 La especificación de Commits Convencionales es una convención ligera sobre los mensajes de commits. Proporciona un conjunto sencillo de reglas para crear un historial de commits explícito; lo que hace más fácil escribir herramientas automatizadas encima del historial. Esta convención encaja con **[SemVer](http://semver.org/lang/es/)**, al describir en los mensajes de los commits las funcionalidades, arreglos, y cambios de ruptura hechos.
 
+## **¿Qué es Semantic Versioning o SemVer?**
+
+A modo resumen, SemVer es la convención más extendida para establecer un versionado a librerías, paquetes, dependencias, y a la vida en general.
+
+El versionado se divide en tres bloques:
+
+```jsx
+// MAJOR.MINOR.PATCH
+
+2.12.7
+// 2 -> MAJOR
+// 12 -> MINOR
+// 7 -> PATCH
+```
+
+- **MAJOR**: número de versión que se incrementa cuando se rompe la compatibilidad de versiones anteriores.
+- **MINOR**: número de versión que se incrementa cuando se añade funcionalidad y esta es compatible en la versión MAJOR actual.
+- **PATCH**: número de versión que se incrementa cuando se arreglan errores en la versión MAJOR.MINOR actual.
+
+Adicionalmente está permitido (y es muy común) añadir al bloque PATCH información adicional indicando si son versiones previas a un nuevo lanzamiento (alpha, beta, next, rc, ...) y el número de la compilación. Esta información adicional debe ir en el bloque PATCH precedido por un guión `-`.
+
+Ejemplo:
+
+```jsx
+12.2.0-alpha.0
+
+// Aquí "alpha" indica el estado de la compilación y ".0" indica el número de compilación
+```
+
+## Tipos
+
+El primer elemento es el tipo de commit refiriéndose al contenido del commit. Basados en la [convención establecida por Angular](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines) son los siguientes:
+
+- **feat**: cuando se añade una nueva funcionalidad.
+- **fix**: cuando se arregla un error.
+- **chore**: tareas rutinarias que no sean específicas de una feature o un error como por ejemplo añadir contenido al fichero `.gitignore` o instalar una dependencia.
+- **test**: si añadimos o arreglamos tests.
+- **docs**: cuando solo se modifica documentación.
+- **build**: cuando el cambio afecta al compilado del proyecto.
+- **ci**: el cambio afecta a ficheros de configuración y scripts relacionados con la integración continua.
+- **style**: cambios de legibilidad o formateo de código que no afecta a funcionalidad.
+- **refactor**: cambio de código que no corrige errores ni añade funcionalidad, pero mejora el código.
+- **perf**: usado para mejoras de rendimiento.
+- **revert**: si el commit revierte un commit anterior. Debería indicarse el hash del commit que se revierte.
+
+### Ámbito
+
+El campo ámbito es opcional y sirve para dar información contextual como por ejemplo indicar el nombre de la feature a la que afecta el commit.
+
+### Descripción
+
+Breve descripción del cambio cumpliendo lo siguiente:
+
+- usa imperativos, en tiempo presente: “añade” mejor que “añadido” o “añadidos”
+- la primera letra siempre irá en minúscula
+- no escribir un punto al final
+
+### Cuerpo
+
+Es opcional y debería añadir aportar más información que la descripción. Debería usar el mismo tono imperativo que esta.
+
+### Nota al pie
+
+Es opcional. Siempre se utiliza para indicar cambios que rompan la compatibilidad de la versión actual (Breaking Changes) aunque también están permitidos otros formatos que sigan la convención de [git trailer format](https://git-scm.com/docs/git-interpret-trailers).
+
 El mensaje del commit debe ser estructurado de la siguiente manera:
 
 ```php
@@ -652,7 +717,7 @@ $instance = new class extends \Foo implements
 };
 ```
 
-# Estándares de nombramiento en laravel
+# [Estándares de nombramiento en Laravel](https://www.mindtwo.de/guidelines/coding/laravel#site)
 
 | Clases | Convención | Ejemplo |
 | --- | --- | --- |
