@@ -34,4 +34,4 @@ Finalmente, el código es desplegado en el servidor de producción. En este paso
 
 ## Diagrama de proceso
 
-![img](process-diagram.svg)
+![process-diagram.svg](img)
