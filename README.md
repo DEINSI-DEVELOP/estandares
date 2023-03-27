@@ -2,17 +2,94 @@
 
 # Estándares PSR
 
-## PSR-4
+## PSR-12
 
-Laravel utiliza el estándar PSR-4 para la carga automática de clases. Este estándar define la estructura de directorios y nombres de archivos para las clases de PHP. En Laravel, todas las clases deben estar en el espacio de nombres `App` y deben estar en el directorio `app/`. Además, la estructura de archivos debe reflejar la estructura de los espacios de nombres.
+Esta especificación amplía, expande y sustituye a PSR-2, la guía de estilo de codificación, y exige el cumplimiento de PSR-1, la norma básica de codificación.
 
-## PSR-2
+Al igual que PSR-2, la intención de esta especificación es reducir la fricción cognitiva al escanear código de diferentes autores. Lo hace enumerando un conjunto compartido de reglas y expectativas sobre cómo formatear el código PHP. Esta PSR busca proporcionar un conjunto de formas que las herramientas de estilo de codificación puedan implementar, los proyectos puedan declarar su adhesión y los desarrolladores puedan relacionar fácilmente entre diferentes proyectos. Cuando varios autores colaboran a través de múltiples proyectos, ayuda tener un conjunto de directrices para ser usadas entre todos esos proyectos.
 
-Laravel también sigue el estándar PSR-2 para el estilo de codificación. Este estándar define reglas para la indentación, el uso de espacios en blanco, las líneas en blanco, las llaves y otros elementos del código. En Laravel, las reglas de PSR-2 se aplican a todo el código, incluyendo el núcleo del framework y las aplicaciones desarrolladas con Laravel.
+La PSR-2 fue aceptada en 2012 y, desde entonces, se han introducido una serie de cambios en PHP que repercuten en las directrices de estilo de codificación. Mientras que la PSR-2 es muy completa en cuanto a la funcionalidad de PHP que existía en el momento de su redacción, la nueva funcionalidad está muy abierta a la interpretación. Esta PSR, por lo tanto, pretende aclarar el contenido de la PSR-2 en un contexto más moderno con la nueva funcionalidad disponible, y hacer que la fe de erratas de la PSR-2 sea vinculante.
 
-## PHPDoc
+Ejemplo
+Este ejemplo engloba algunas de las reglas que figuran a continuación a modo de resumen rápido:
 
-Laravel utiliza PHPDoc para documentar el código. PHPDoc es un formato de comentarios para documentar el código PHP. Laravel utiliza PHPDoc para documentar las clases, los métodos y las propiedades. Las etiquetas de PHPDoc se utilizan para documentar los tipos de datos, las descripciones y otros elementos del código.
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace Vendor\Package;
+
+use Vendor\Package\{ClassA as A, ClassB, ClassC as C};
+use Vendor\Package\SomeNamespace\ClassD as D;
+
+use function Vendor\Package\{functionA, functionB, functionC};
+
+use const Vendor\Package\{ConstantA, ConstantB, ConstantC};
+
+class Foo extends Bar implements FooInterface
+{
+    public function sampleFunction(int $a, int $b = null): array
+    {
+        if ($a === $b) {
+            bar();
+        } elseif ($a > $b) {
+            $foo->bar($arg1);
+        } else {
+            BazClass::bar($arg2, $arg3);
+        }
+    }
+
+    final public static function bar()
+    {
+        // method body
+    }
+}
+```
+
+> 2.1 Norma básica de codificación
+> 
+
+El código DEBE seguir todas las reglas descritas en PSR-1.
+
+El término 'StudlyCaps' en PSR-1 DEBE interpretarse como PascalCase donde la primera letra de cada palabra se escribe en mayúscula, incluyendo la primera letra.
+
+> 2.2 Archivos
+> 
+
+Todos los archivos PHP DEBEN usar únicamente el final de línea Unix LF (salto de línea).
+
+Todos los archivos PHP DEBEN terminar con una línea que no esté en blanco, terminada con una sola LF.
+
+La etiqueta de cierre ?> DEBE ser omitida en archivos que contengan únicamente PHP.
+
+> 2.3 Líneas
+> 
+
+NO DEBE haber un límite duro en la longitud de las líneas.
+
+El límite blando de longitud de línea DEBE ser de 120 caracteres.
+
+Las líneas NO DEBEN ser más largas de 80 caracteres; las líneas más largas DEBEN ser divididas en múltiples líneas subsecuentes de no más de 80 caracteres cada una.
+
+NO DEBE haber espacios en blanco al final de las líneas.
+
+Pueden añadirse líneas en blanco para mejorar la legibilidad y para indicar bloques de código relacionados, excepto cuando esté explícitamente prohibido.
+
+NO DEBE haber más de una sentencia por línea.
+
+> 2.4 Sangría
+> 
+
+El código DEBE usar una sangría de 4 espacios por cada nivel de sangría, y NO DEBE usar tabuladores para sangrar.
+
+2.5 Palabras clave y tipos
+
+Todas las palabras clave y tipos reservados de PHP [1][2] DEBEN estar en minúsculas.
+
+Cualquier nuevo tipo y palabra clave añadida a futuras versiones de PHP DEBE estar en minúsculas.
+
+Se DEBE usar la forma corta de las palabras clave de tipo, p.e. bool en lugar de boolean, int en lugar de integer, etc.
 
 # Estándares de nombramiento en laravel
 
@@ -387,7 +464,7 @@ let article = $('#article').val();
 
 La mejor manera es utilizar el paquete especializado PHP a JS para transferir los datos.
 
-# Utilizar archivos de configuración y de idioma, constantes en lugar de texto en el código.
+# `(Debería)`Utilizar archivos de configuración y de idioma, constantes en lugar de texto en el código.
 
 ### `INCORRECTO`
 
