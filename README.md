@@ -92,7 +92,7 @@ Tipos adicionales no son obligatorios en la especificación de Commits Convencio
 ## Ejemplos:
 
 <aside>
-<img src="https://www.notion.so/icons/command-line_blue.svg" alt="https://www.notion.so/icons/command-line_blue.svg" width="40px" /> ****Mensaje de commit con descripción y cambio de ruptura en la nota al pie****
+<img src="/icons/command-line_blue.svg" alt="/icons/command-line_blue.svg" width="40px" /> ****Mensaje de commit con descripción y cambio de ruptura en la nota al pie****
 
 </aside>
 
@@ -103,7 +103,7 @@ BREAKING CHANGE: `extends` key in config file is now used for extending other co
 ```
 
 <aside>
-<img src="https://www.notion.so/icons/command-line_blue.svg" alt="https://www.notion.so/icons/command-line_blue.svg" width="40px" /> ****Mensaje de commit con `!` para llamar la atención al cambio de ruptura**
+<img src="/icons/command-line_blue.svg" alt="/icons/command-line_blue.svg" width="40px" /> ****Mensaje de commit con `!` para llamar la atención al cambio de ruptura**
 
 </aside>
 
@@ -112,7 +112,7 @@ refactor!: drop support for Node 6
 ```
 
 <aside>
-<img src="https://www.notion.so/icons/command-line_blue.svg" alt="https://www.notion.so/icons/command-line_blue.svg" width="40px" /> ****Mensaje de commit con ambos `!` y BREAKING CHANGE en la nota al pie**
+<img src="/icons/command-line_blue.svg" alt="/icons/command-line_blue.svg" width="40px" /> ****Mensaje de commit con ambos `!` y BREAKING CHANGE en la nota al pie**
 
 </aside>
 
@@ -123,7 +123,7 @@ BREAKING CHANGE: refactor to use JavaScript features not available in Node 6.
 ```
 
 <aside>
-<img src="https://www.notion.so/icons/command-line_blue.svg" alt="https://www.notion.so/icons/command-line_blue.svg" width="40px" /> ****Mensaje de commit sin cuerpo****
+<img src="/icons/command-line_blue.svg" alt="/icons/command-line_blue.svg" width="40px" /> ****Mensaje de commit sin cuerpo****
 
 </aside>
 
@@ -132,7 +132,7 @@ docs: correct spelling of CHANGELOG
 ```
 
 <aside>
-<img src="https://www.notion.so/icons/command-line_blue.svg" alt="https://www.notion.so/icons/command-line_blue.svg" width="40px" /> ****Mensaje de commit con ámbito****
+<img src="/icons/command-line_blue.svg" alt="/icons/command-line_blue.svg" width="40px" /> ****Mensaje de commit con ámbito****
 
 </aside>
 
@@ -141,7 +141,7 @@ feat(lang): added polish language
 ```
 
 <aside>
-<img src="https://www.notion.so/icons/command-line_blue.svg" alt="https://www.notion.so/icons/command-line_blue.svg" width="40px" /> ****Mensaje de commit con cuerpo multi-párrafo y múltiples notas al pie****
+<img src="/icons/command-line_blue.svg" alt="/icons/command-line_blue.svg" width="40px" /> ****Mensaje de commit con cuerpo multi-párrafo y múltiples notas al pie****
 
 </aside>
 
@@ -176,6 +176,40 @@ Las palabras clave “DEBE” (“MUST”), “NO DEBE” (“MUST NOT”), “R
 14. Tipos diferentes a `feat` y `fix` PUEDEN ser usados en los mensajes de commit, ej., *docs: updated ref docs.*.
 15. Las unidades de información que componen Commits Convencionales NO DEBEN ser tratados como implementadores sensitivos de caso, con la excepción de BREAKING CHANGE que DEBE ir en mayúsculas.
 16. BREAKING-CHANGE DEBE ser sinónimo de BREAKING CHANGE, cuando se usa en una nota al pie.
+
+# Proceso de implementación
+
+El proceso de revisión de cambios y solicitudes de pull será fundamental para asegurar y garantizar la integridad del código. Aquí se describen los pasos principales y los roles involucrados en este proceso.
+
+> Desarrolladores:
+Los desarrolladores son responsables de escribir y actualizar el código en el repositorio de GitHub. Cuando un desarrollador desea agregar una nueva funcionalidad o hacer una corrección de errores, primero debe crear una nueva rama de código a partir de la rama principal. Luego, en la nueva rama, el desarrollador hace los cambios necesarios y envía una solicitud de pull (pull request) a la rama principal del repositorio.
+> 
+> 
+> Para asegurar la calidad e integridad del desarrollo, el equipo de desarrolladores fue segmentado y desplegado en distintos roles los cuales cuentan con alcances referentes a su estatus.
+> 
+> - Desarrolladores Junior:
+>     - Becarios
+> - Desarrolladores Semi Senior:
+>     - Guzmán Pérez Johan
+>     - Vazquez Vizcarra Lizbeth Johana
+> - Desarrolladores Senior:
+>     - Torres Servin Emmanuel
+
+> Code reviewers:
+Los code reviewers son los encargados de revisar y evaluar los cambios propuestos en una solicitud de pull. Un code reviewer debe tener conocimiento técnico en el área específica del proyecto para poder entender y evaluar adecuadamente los cambios propuestos. El code reviewer puede hacer comentarios, sugerencias y solicitar cambios adicionales para asegurarse de que el código esté correctamente escrito y de que cumpla con los estándares de calidad y seguridad del proyecto.
+> 
+
+> QA:
+Una vez que los cambios han sido revisados por el code reviewer, el siguiente paso es pasarlos por un proceso de aseguramiento de calidad (QA). El QA es un proceso de verificación de la funcionalidad y calidad del código propuesto para asegurarse de que cumple con los requisitos del proyecto. El QA puede incluir pruebas de funcionalidad, pruebas de carga, pruebas de seguridad y otras pruebas necesarias para validar el código.
+> 
+
+> Servidor escenario:
+Una vez que el código ha pasado satisfactoriamente las pruebas de QA, se envía a un servidor de escenario (staging server). En este servidor, el código es evaluado en un ambiente de producción simulado para verificar que todo funciona correctamente. Los errores que se detecten aquí se deben corregir antes de pasar al siguiente paso.
+> 
+
+> Servidor de despliegue:
+Finalmente, el código es desplegado en el servidor de producción. En este paso, el código ya ha sido revisado por el code reviewer, probado por el equipo de QA y evaluado en el servidor de escenario, por lo que se espera que el despliegue se realice sin problemas. Una vez que el código ha sido desplegado en producción, el desarrollador responsable puede cerrar el pull request.
+> 
 
 # [Estándares PSR](https://www.php-fig.org/psr/psr-12/)
 
@@ -1149,11 +1183,3 @@ $apiKey = env('API_KEY');
 ```
 
 ### `CORRECTO`
-
-```php
-// config/api.php
-    'key' => env('API_KEY'),
-
-    // Use the data
-    $apiKey = config('api.key');
-```
