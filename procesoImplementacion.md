@@ -16,7 +16,7 @@ Para asegurar la calidad e integridad del desarrollo, el equipo de desarrollador
     💡 Al momento que los desarrolladores trabajen en un módulo deberán de seguir las siguiente reglas:
     
     1. El nombre de la rama será igual al módulo sobre el cual se desarrollará.
-    2. Deberá versionar el módulo utilizando los `[COMMITS CONVENCIONALES](https://www.conventionalcommits.org/es/v1.0.0-beta.2/)`
+    2. Deberá versionar el módulo utilizando los [commits convencionales](https://www.conventionalcommits.org/es/v1.0.0-beta.2/)
     </aside>
     
     - [Guzmán Pérez Johan](https://github.com/JohanKrauss)
@@ -42,4 +42,4 @@ Finalmente, el código es desplegado en el servidor de producción. En este paso
 
 ## Diagrama de proceso
 
-![Diagrama](img/process-diagram.svg)
+![Diagrama de procesos](img/process-diagram.svg)
